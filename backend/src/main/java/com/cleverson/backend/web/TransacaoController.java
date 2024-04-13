@@ -3,7 +3,6 @@ package com.cleverson.backend.web;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cleverson.backend.entity.Transacao;
 import com.cleverson.backend.entity.TransacaoReport;
 import com.cleverson.backend.service.TransacoesService;
 
@@ -22,8 +21,8 @@ public class TransacaoController {
         this.service = service;
     }
 
+    @CrossOrigin(origins = {"http://localhost:9090"})
     @GetMapping
-    @CrossOrigin(origins = { "http://localhost:9090" })
     List<TransacaoReport> listAll() {
         return service.listTotaisTransacoesPorNOmeDaLoja();
     }

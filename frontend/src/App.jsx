@@ -19,66 +19,88 @@ function App() {
     setFile(e.target.file[0]);
   }
 
-  const uploadFile = async (e) =>{
+  const uploadFile = async () =>{
     const formData = new FormData();
     formData.append('file', file);
     axios.post("http://localhost:8080/cnab/upload", formData,{
       headers: {
-        'Content-type': 'multipart/form-data'
-      }
+        'Content-Type': 'multipart/form-data',
+      },
     });
   }
 
   useEffect(()=>{
     fetchTransactions();
   },[]);
+
   return (
-    <div>
-      <div>
-        <h1>Importacao de CNAB</h1>
+    <div className="p-4">
+       <h1 className="text-2xl font-semibold mb-4">Importação de CNAB</h1>
+        <div className="mb-8">
+        <div className="flex items-center space-x-4">
+          <label className="text-gray-600">
+            <span className="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white py-2 px-4 rounded-lg">
+              Choose File
+            </span>
+            <input
+              type="file"
+              className="hidden"
+              onChange={headleFileChange}
+              accept=".txt"
+            />
+          </label>
+          <button
+            className="bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-lg"
+            onClick={uploadFile}
+          >
+      
+            Upload File
+          </button>
+        </div>
+        </div>
+     
+
+      <div className="p-4">
+        <h2 className="text-2xl font-semibold mb-4">Transações</h2>
+        <ul className="bg-white shadow-md rounded-md p-4">
+          {transactions.map((report, key)=>(
+             <li className="mb-4 p-4 border-b border-gray-300 flex flex-col">
+             <table className="table-auto w-full">
+               <thead>
+                 <tr>
+                   <th className="px-4 py-2">Cartão</th>
+                   <th className="px-4 py-2">CPF</th>
+                   <th className="px-4 py-2">Data</th>
+                   <th className="px-4 py-2">Dono da Loja</th>
+                   <th className="px-4 py-2">Hora</th>
+                   <th className="px-4 py-2">Nome da Loja</th>
+                   <th className="px-4 py-2">Tipo</th>
+                   <th className="px-4 py-2">Valor</th>
+                 </tr>
+               </thead>
+               <body>
+                 {report.transacoes.map((transacao, key)=>{
+                    <tr>
+                     <td className="px-4 py-2">{transacao.cartao}</td>
+                         <td className="px-4 py-2">{transacao.cpf}</td>
+                         <td className="px-4 py-2">{transacao.data}</td>
+                         <td className="px-4 py-2">{transacao.donoDaLoja}</td>
+                         <td className="px-4 py-2">{transacao.hora}</td>
+                         <td className="px-4 py-2">{transacao.nomeDaLoja}</td>
+                         <td className="px-4 py-2">{transacao.tipo}</td>
+                     </tr>
+                 })};
+                
+               </body>
+             </table>
+             </li>
+          ))};
+        
+       </ul>
       </div>
+    </div>
     
-    <div>
-      <span>Cloose File</span>
-      <input type="file" 
-      accept='.text' 
-        onChange={headleFileChange}
-      />
-      <button onClick={uploadFile}>Update File</button>
-    </div>
-      <div>
-        <h2>Transacoes</h2>
-        <ul>
-          <thead>
-            <tr>
-              <th className="">Cartao</th>
-              <th className="">CPF</th>
-              <th className="">Data</th>
-              <th className="">Dono da Loja</th>
-              <th className="">Hora</th>
-              <th className="">Nome da Loja</th>
-              <th className="">Tipo</th>
-              <th className="">Valor</th>
-            </tr>
-
-          </thead>
-          <body>
-            <tr>
-              <td>transacao.cartao</td>
-              <td>transacao.cpf</td>
-              <td>transacao.data</td>
-              <td>transacao.donoDaLoja</td>
-              <td>transacao.hora</td>
-              <td>transacao.nomeDaLoja</td>
-              <td>transacao.tipo</td>
-              <td>transacao.valor</td>
-            </tr>
-          </body>
-        </ul>
-
-      </div>
-    </div>
-  )
+  );
 }
 
 export default App

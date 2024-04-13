@@ -53,7 +53,6 @@ public class BatchConfig {
                 .build();
     }
 
-    @SuppressWarnings("null")
     @Bean
     Step step(
             ItemReader<TransacaoCNAB> reader,

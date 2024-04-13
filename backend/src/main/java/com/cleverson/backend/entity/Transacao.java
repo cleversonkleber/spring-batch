@@ -17,8 +17,8 @@ public record Transacao(
         Long cpf,
         String cartao,
         Time hora,
-        @Column("dono_loja") String donoDaLoja,
-        @Column("nome_loja") String nomeDaLoja) {
+        @Column("DONO_LOJA") String donoDaLoja,
+        @Column("NOME_LOJA") String nomeDaLoja) {
 
     // Wither Pattern
     public Transacao withValor(BigDecimal valor) {
