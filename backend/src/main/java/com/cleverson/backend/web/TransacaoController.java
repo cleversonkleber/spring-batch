@@ -21,7 +21,7 @@ public class TransacaoController {
         this.service = service;
     }
 
-    @CrossOrigin(origins = {"http://localhost:9090"})
+    @CrossOrigin(origins = "http://localhost:9090", "https://frontend-pagnet.onrender.com" })
     @GetMapping
     List<TransacaoReport> listAll() {
         return service.listTotaisTransacoesPorNOmeDaLoja();
