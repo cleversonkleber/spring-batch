@@ -21,24 +21,24 @@ public class TransacoesService {
         this.repository = repository;
     }
 
-    public List<TransacaoReport> listTotaisTransacoesPorNOmeDaLoja() {
-        var transacoes = repository.findAllByOrderByNomeDaLojaAscIdDesc();
-        var reportMap = new LinkedHashMap<String, TransacaoReport>();
-        transacoes.forEach(transacao -> extracted(reportMap, transacao));
 
-        return new ArrayList<>(reportMap.values());
-    }
+  public List<TransacaoReport> getTotaisTransacoesByNomeDaLoja() {
+    List<Transacao> transacoes = repository.findAllByOrderByNomeDaLojaAscIdDesc();
 
-    private void extracted(LinkedHashMap<String, TransacaoReport> reportMap, Transacao transacao) {
-        String nomeDaLoja = transacao.nomeDaLoja();
-        var tipoTransacao = TipoTransacao.findByTipo(transacao.tipo());
-        BigDecimal valor = transacao.valor().multiply(
-                tipoTransacao.getSinal());
-        reportMap.compute(nomeDaLoja, (Key, existingReport) -> {
-            var report = (existingReport != null) ? existingReport
-                    : new TransacaoReport(BigDecimal.ZERO, Key, new ArrayList<>());
+    // preserves order
+    Map<String, TransacaoReport> reportMap = new LinkedHashMap<>();
 
-            return report.addtotal(valor).addTransacao(transacao.withValor(valor));
-        });
-    }
+    transacoes.forEach(transacao -> {
+      var nomeDaLoja = transacao.nomeDaLoja();
+      var valor = transacao.valor();
+
+      reportMap.compute(nomeDaLoja, (key, existingReport) -> {
+        TransacaoReport report = (existingReport != null) ? existingReport
+            : new TransacaoReport(BigDecimal.ZERO, key, new ArrayList<>());
+        return report.addTotal(valor).addTransacao(transacao);
+      });
+    });
+
+    return new ArrayList<>(reportMap.values());
+  }
 }
