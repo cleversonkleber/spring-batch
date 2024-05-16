@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-//@RequestMapping("transacoes")
+@RequestMapping("transacoes")
 public class TransacaoController {
 
     private final TransacoesService service;
@@ -22,7 +22,7 @@ public class TransacaoController {
     }
 
     @CrossOrigin(origins = {"http://localhost:9090", "https://frontend-pagnet-caf6.onrender.com"})
-    @GetMapping("/transacoes")
+    @GetMapping
     List<TransacaoReport> listAll() {
         return service.listTotaisTransacoesPorNOmeDaLoja();
     }
