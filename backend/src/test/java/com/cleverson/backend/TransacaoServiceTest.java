@@ -56,7 +56,7 @@ public class TransacaoServiceTest {
 
                 when(transacaoRepository.findAllByOrderByNomeDaLojaAscIdDesc()).thenReturn(mockTransacoes);
 
-                var reports = transacaoService.listTotaisTransacoesPorNOmeDaLoja();
+                var reports = transacaoService.getTotaisTransacoesByNomeDaLoja();
 
                 assertEquals(2, reports.size());
 
