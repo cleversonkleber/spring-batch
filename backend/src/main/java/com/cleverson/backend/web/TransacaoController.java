@@ -24,7 +24,7 @@ public class TransacaoController {
     @CrossOrigin(origins = {"http://localhost:9090", "https://frontend-pagnet-caf6.onrender.com"})
     @GetMapping
     List<TransacaoReport> listAll() {
-        return service.listTotaisTransacoesPorNOmeDaLoja();
+        return service.getTotaisTransacoesByNomeDaLoja();
     }
 
 }
