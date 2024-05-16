@@ -9,7 +9,7 @@ public record TransacaoReport(
         List<Transacao> transacoes) {
 
   public TransacaoReport addTotal(BigDecimal valor) {
-    return new TransacaoReport(this.total().add(valor), this.nome(), this.transacoes);
+    return new TransacaoReport(this.total().add(valor), this.nome(), this.transacoes());
   }
 
   public TransacaoReport addTransacao(Transacao transacao) {
@@ -19,7 +19,7 @@ public record TransacaoReport(
   }
 
   public TransacaoReport withNomeDaLoja(String nomeDaLoja) {
-    return new TransacaoReport(this.total(), nomeDaLoja, this.transacoes);
+    return new TransacaoReport(this.total(), nomeDaLoja, this.transacoes());
   }
 
 }
